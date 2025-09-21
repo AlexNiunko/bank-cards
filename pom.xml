@@ -18,9 +18,8 @@ pom.xml — файл для управления зависимостями пр
     <relativePath/>
   </parent>
 
-  <groupId>com.exaample</groupId>
-  <artifactId>bancards</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <groupId>com.example</groupId>
+  <artifactId>bank_rest</artifactId>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -67,18 +66,18 @@ pom.xml — файл для управления зависимостями пр
     <!--    </dependency>-->
 
 
-    <!--    &lt;!&ndash; liquibase-core &ndash;&gt;-->
-    <!--    <dependency>-->
-    <!--      <groupId>org.liquibase</groupId>-->
-    <!--      <artifactId>liquibase-core</artifactId>-->
-    <!--    </dependency>-->
+        <!-- liquibase-core -->
+        <dependency>
+          <groupId>org.liquibase</groupId>
+          <artifactId>liquibase-core</artifactId>
+        </dependency>
 
-    <!--    &lt;!&ndash; lombok &ndash;&gt;-->
-    <!--    <dependency>-->
-    <!--      <groupId>org.projectlombok</groupId>-->
-    <!--      <artifactId>lombok</artifactId>-->
-    <!--      <optional>true</optional>-->
-    <!--    </dependency>-->
+        <!-- lombok -->
+        <dependency>
+          <groupId>org.projectlombok</groupId>
+          <artifactId>lombok</artifactId>
+          <optional>true</optional>
+        </dependency>
 
     <!--    &lt;!&ndash; springdoc-openapi &ndash;&gt;-->
     <!--    <dependency>-->
