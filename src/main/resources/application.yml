@@ -1,8 +1,20 @@
-#
-# application.yml — главный конфигурационный файл Spring Boot.
+spring:
+  application:
+    name: bank-cards
+  jpa:
+    hibernate:
+      ddl-auto: none
 
-Что нужно сделать:
-  - Указать настройки подключения к базе данных.
-  - Указать порт приложения.
-  - Настроить параметры безопасности и JWT.
-  - Включить Swagger UI.
+  datasource:
+    url: ${DATASOURCE_PROTOCOL}://${DEV_IP_ADDRESS}:${DATASOURCE_PORT}/${DATASOURCE_NAME}?${DATASOURCE_PROPERTIES}
+    username: user
+    password: user
+    driver-class-name: org.postgresql.Driver
+  liquibase:
+    enabled: false
+    change-log: classpath:db/migration/db.changelog-master.yml
+
+server:
+  port: 8080
+
+
