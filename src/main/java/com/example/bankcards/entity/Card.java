@@ -6,7 +6,10 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,21 +17,30 @@ import lombok.Setter;
 @Setter
 @Getter
 @NoArgsConstructor
-@Table(name = "users")
 @Entity
-public class User {
+public class Card {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String login;
-
-    private String password;
+    @ManyToOne
+    @JoinColumn(name="user_id")
+    private User user;
 
     @Enumerated(EnumType.STRING)
-    private UserRole role;
+    private PaymentSystem system;
 
-    private UserInfo info;
+    private String cardNumber;
+
+    private BigDecimal balance;
+
+    private LocalDateTime expirationTime;
+
+    @Enumerated(EnumType.STRING)
+    private CardStatus status;
+
+    @Enumerated(EnumType.STRING)
+    private CurrencyType currency;
 
 }
