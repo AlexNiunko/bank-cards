@@ -31,4 +31,7 @@ public class User {
 
     private UserInfo info;
 
+    @Enumerated(EnumType.STRING)
+    private ProfileStatus status;
+
 }
