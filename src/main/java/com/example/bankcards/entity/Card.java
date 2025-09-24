@@ -10,13 +10,17 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Setter
 @Getter
+@AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Entity
 public class Card {
 
@@ -25,15 +29,15 @@ public class Card {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name="user_id")
-    private Users users;
+    @JoinColumn(name = "user_id")
+    private Users user;
 
     @Enumerated(EnumType.STRING)
     private PaymentSystem system;
 
     private String cardNumber;
 
-    private BigDecimal balance;
+    private BigDecimal balance = BigDecimal.ZERO;
 
     private LocalDateTime expirationTime;
 
@@ -44,3 +48,4 @@ public class Card {
     private CurrencyType currency;
 
 }
+

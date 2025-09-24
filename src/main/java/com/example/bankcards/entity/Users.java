@@ -38,10 +38,11 @@ public class Users {
         joinColumns = @JoinColumn(name = "user_id"),
         inverseJoinColumns = @JoinColumn(name = "role_id")
     )
-
     private List<Role> roles = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
     private ProfileStatus status;
+
+    private UserInfo userInfo;
 
 }

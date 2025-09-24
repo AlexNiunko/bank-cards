@@ -1,14 +1,9 @@
 package com.example.bankcards.controller;
 
 import com.example.bankcards.dto.ErrorResponseDto;
-import com.example.bankcards.dto.request.ActivateCardRequestDto;
-import com.example.bankcards.dto.request.BlockCardRequestDto;
 import com.example.bankcards.dto.request.CreateCardRequestDto;
-import com.example.bankcards.dto.request.DeleteCardRequestDto;
-import com.example.bankcards.dto.response.ActivateCardResponseDto;
-import com.example.bankcards.dto.response.BlockCardResponseDto;
+import com.example.bankcards.dto.response.CardResponseDto;
 import com.example.bankcards.dto.response.CreateCardResponseDto;
-import com.example.bankcards.dto.response.DeleteCardResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -16,6 +11,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -34,10 +30,10 @@ public class CardController {
             content = {@Content(schema = @Schema(implementation = ErrorResponseDto.class))})
     })
     @PostMapping("/create")
-    public CreateCardResponseDto createCard(CreateCardRequestDto dto){
-        CreateCardResponseDto response=new CreateCardResponseDto();
+    public CreateCardResponseDto createCard(CreateCardRequestDto dto) {
 
-        return response;
+
+        return null;
     }
 
     @Operation(summary = "Заблокировать данную карту")
@@ -51,8 +47,8 @@ public class CardController {
             content = {@Content(schema = @Schema(implementation = ErrorResponseDto.class))})
     })
     @PostMapping("/block")
-    public BlockCardResponseDto blockCard(BlockCardRequestDto dto){
-        BlockCardResponseDto response=new BlockCardResponseDto();
+    public CardResponseDto blockCard(@RequestBody Long cardId) {
+        CardResponseDto response = null;
 
         return response;
     }
@@ -68,8 +64,8 @@ public class CardController {
             content = {@Content(schema = @Schema(implementation = ErrorResponseDto.class))})
     })
     @PostMapping("/activate")
-    public ActivateCardResponseDto activateCard(ActivateCardRequestDto dto){
-        ActivateCardResponseDto response=new ActivateCardResponseDto();
+    public CardResponseDto activateCard(@RequestBody Long cardId) {
+        CardResponseDto response = null;
 
         return response;
     }
@@ -86,8 +82,8 @@ public class CardController {
             content = {@Content(schema = @Schema(implementation = ErrorResponseDto.class))})
     })
     @DeleteMapping("/delete")
-    public DeleteCardResponseDto createCard(DeleteCardRequestDto dto){
-        DeleteCardResponseDto response=new DeleteCardResponseDto();
+    public CardResponseDto deleteCard(@RequestBody Long cardId) {
+        CardResponseDto response = null;
 
         return response;
     }

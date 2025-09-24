@@ -1,8 +1,10 @@
-package com.example.bankcards.service;
+package com.example.bankcards.service.impl;
 
 import com.example.bankcards.entity.Role;
 import com.example.bankcards.entity.Users;
 import com.example.bankcards.repository.UserRepository;
+import com.example.bankcards.service.UserJwtService;
+import com.example.bankcards.dto.UserPrincipals;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;

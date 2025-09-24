@@ -1,4 +1,4 @@
-package com.example.bankcards.service;
+package com.example.bankcards.dto;
 
 import com.example.bankcards.entity.ProfileStatus;
 import java.util.Collection;

@@ -28,7 +28,7 @@ public class JwtFilter extends OncePerRequestFilter {
         String token=null;
         Long userId = null;
 
-        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+        if (authHeader != null && authHeader.startsWith("Bearer ") && !request.getRequestURI().equals("/bank-rest/auth")) {
             token = authHeader.substring(7);
             userId = jwtTokenUtils.extractUserId(token);
         }
