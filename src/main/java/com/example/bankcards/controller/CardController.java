@@ -5,14 +5,17 @@ import com.example.bankcards.dto.request.CreateCardRequestDto;
 import com.example.bankcards.dto.request.UpdateCardStatusRequestDto;
 import com.example.bankcards.dto.response.CardResponseDto;
 import com.example.bankcards.dto.response.CreateCardResponseDto;
+import com.example.bankcards.dto.response.FullCardResponseDto;
 import com.example.bankcards.service.CardService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -51,7 +54,7 @@ public class CardController {
         @ApiResponse(responseCode = "500", description = "Ошибка на стороне сервера",
             content = {@Content(schema = @Schema(implementation = ErrorResponseDto.class))})
     })
-    @PostMapping("/block")
+    @PostMapping("/update")
     public CardResponseDto updateCardStatus(@RequestBody UpdateCardStatusRequestDto dto) {
 
         return cardService.updateCardStatus(dto);
@@ -72,6 +75,22 @@ public class CardController {
     public CardResponseDto deleteCard(@RequestBody Long cardId) {
 
         return cardService.deleteCard(cardId);
+    }
+
+    @Operation(summary = "Получить все карты")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Карты получены"),
+        @ApiResponse(responseCode = "401", description = "Неуспешная валидация токена",
+            content = {@Content(schema = @Schema(implementation = ErrorResponseDto.class))}),
+        @ApiResponse(responseCode = "404", description = "Ресурс для получения карт не найден",
+            content = {@Content(schema = @Schema(implementation = ErrorResponseDto.class))}),
+        @ApiResponse(responseCode = "500", description = "Ошибка на стороне сервера",
+            content = {@Content(schema = @Schema(implementation = ErrorResponseDto.class))})
+    })
+    @DeleteMapping("/delete")
+    @GetMapping("/get-all-cards")
+    public List<FullCardResponseDto> getAllCards(){
+        return cardService.getAllCards();
     }
 
 }

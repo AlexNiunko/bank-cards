@@ -4,6 +4,7 @@ import com.example.bankcards.dto.request.CreateCardRequestDto;
 import com.example.bankcards.dto.request.UpdateCardStatusRequestDto;
 import com.example.bankcards.dto.response.CardResponseDto;
 import com.example.bankcards.dto.response.CreateCardResponseDto;
+import com.example.bankcards.dto.response.FullCardResponseDto;
 import com.example.bankcards.entity.Card;
 import com.example.bankcards.entity.CardStatus;
 import com.example.bankcards.entity.PaymentSystem;
@@ -11,6 +12,7 @@ import com.example.bankcards.entity.Users;
 import com.example.bankcards.repository.CardRepository;
 import com.example.bankcards.repository.UserRepository;
 import com.example.bankcards.service.CardService;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class CardServiceImpl implements CardService {
 
     private final CardRepository cardRepository;
+
     private final UserRepository userRepository;
 
     @Transactional
@@ -68,6 +71,32 @@ public class CardServiceImpl implements CardService {
         cardRepository.save(card);
 
         return getCardResponseDto(cardId, card);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<FullCardResponseDto> getAllCards() {
+        List<FullCardResponseDto> result = new ArrayList<>();
+
+        cardRepository.findAll().forEach(item -> {
+                result.add(getFullCardResponseDto(item));
+            }
+        );
+
+        return result;
+    }
+
+    private FullCardResponseDto getFullCardResponseDto(Card item) {
+        return FullCardResponseDto.builder()
+            .cardId(item.getId())
+            .cardNumber(item.getCardNumber())
+            .balance(item.getBalance())
+            .paymentSystem(item.getSystem())
+            .status(item.getStatus())
+            .expirationTime(item.getExpirationTime())
+            .userId(item.getUser().getId())
+            .currency(item.getCurrency())
+            .build();
     }
 
     private CreateCardResponseDto getCardResponseDto(Card savedCard, Users user) {

@@ -4,6 +4,8 @@ import com.example.bankcards.dto.request.CreateCardRequestDto;
 import com.example.bankcards.dto.request.UpdateCardStatusRequestDto;
 import com.example.bankcards.dto.response.CardResponseDto;
 import com.example.bankcards.dto.response.CreateCardResponseDto;
+import com.example.bankcards.dto.response.FullCardResponseDto;
+import java.util.List;
 
 public interface CardService {
 
@@ -12,5 +14,7 @@ public interface CardService {
     CardResponseDto deleteCard(Long cardId);
 
     CardResponseDto updateCardStatus(UpdateCardStatusRequestDto dto);
+
+    List<FullCardResponseDto> getAllCards();
 
 }
