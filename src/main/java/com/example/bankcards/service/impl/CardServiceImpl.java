@@ -1,6 +1,7 @@
 package com.example.bankcards.service.impl;
 
 import com.example.bankcards.dto.request.CreateCardRequestDto;
+import com.example.bankcards.dto.request.UpdateCardStatusRequestDto;
 import com.example.bankcards.dto.response.CardResponseDto;
 import com.example.bankcards.dto.response.CreateCardResponseDto;
 import com.example.bankcards.entity.Card;
@@ -43,18 +44,6 @@ public class CardServiceImpl implements CardService {
         return getCardResponseDto(savedCard, user);
     }
 
-    @Transactional
-    @Override
-    public CardResponseDto blockCard(Long cardId) {
-
-        var card = getCard(cardId);
-
-        card.setStatus(CardStatus.BLOCKED);
-
-        cardRepository.save(card);
-
-        return getCardResponseDto(cardId, card);
-    }
 
     @Transactional
     @Override
@@ -69,10 +58,12 @@ public class CardServiceImpl implements CardService {
 
     @Transactional
     @Override
-    public CardResponseDto activateCard(Long cardId) {
+    public CardResponseDto updateCardStatus(UpdateCardStatusRequestDto dto) {
+        var cardId = dto.cardId();
+
         var card = getCard(cardId);
 
-        card.setStatus(CardStatus.ACTIVE);
+        card.setStatus(dto.status());
 
         cardRepository.save(card);
 
