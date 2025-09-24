@@ -6,5 +6,7 @@
 
   <include file="db/migration/v1.0/001-create-user.xml"/>
   <include file="db/migration/v1.0/002-create-card.xml"/>
+  <include file="/db/migration/v1.0/003-create-role.xml"/>
+  <include file="db/migration/v1.0/004-create-user-roles.xml"/>
 
 </databaseChangeLog>

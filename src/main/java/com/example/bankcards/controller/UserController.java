@@ -1,13 +1,11 @@
 package com.example.bankcards.controller;
 
 import com.example.bankcards.dto.UserDto;
-import com.example.bankcards.dto.request.LoginRequestDto;
-import com.example.bankcards.dto.request.RegistrationUserRequestDto;
 import com.example.bankcards.dto.request.DeleteUserRequestDto;
+import com.example.bankcards.dto.request.RegistrationUserRequestDto;
 import com.example.bankcards.dto.request.UpdateUserRequestDto;
-import com.example.bankcards.dto.response.LoginResponseDto;
-import com.example.bankcards.dto.response.RegistrationUserResponseDto;
 import com.example.bankcards.dto.response.DeleteUserResponseDto;
+import com.example.bankcards.dto.response.RegistrationUserResponseDto;
 import com.example.bankcards.dto.response.UpdateUserResponseDto;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,16 +18,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("bank-rest/user")
+@RequestMapping("/bank-rest/user")
 public class UserController {
 
-    @PostMapping("/login")
-    public LoginResponseDto login(@RequestBody LoginRequestDto dto){
-        LoginResponseDto response=new LoginResponseDto();
-        return response;
-    }
 
-    @PostMapping("/registration")
+    @PostMapping("/add-new-user")
     public RegistrationUserResponseDto createUser(@RequestBody RegistrationUserRequestDto dto) {
         RegistrationUserResponseDto response = new RegistrationUserResponseDto();
         return response;

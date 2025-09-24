@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("bank-rest/card")
+@RequestMapping("/bank-rest/card")
 public class CardController {
 
     @Operation(summary = "Создать новую карту")

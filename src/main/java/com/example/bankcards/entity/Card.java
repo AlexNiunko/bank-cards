@@ -26,7 +26,7 @@ public class Card {
 
     @ManyToOne
     @JoinColumn(name="user_id")
-    private User user;
+    private Users users;
 
     @Enumerated(EnumType.STRING)
     private PaymentSystem system;
