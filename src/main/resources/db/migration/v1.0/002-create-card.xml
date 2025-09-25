@@ -27,8 +27,8 @@
       </column>
       <column name="currency" type="VARCHAR(10)">
         <constraints nullable="false"/>
-      </column> <column name="card_number" type="VARCHAR(16)">
-      <constraints nullable="false"/>
+      </column> <column name="card_number" type="VARCHAR(160)">
+      <constraints nullable="false" unique="true"/>
     </column>
     </createTable>
 
