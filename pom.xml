@@ -59,11 +59,11 @@ pom.xml — файл для управления зависимостями пр
       <artifactId>spring-boot-starter-security</artifactId>
     </dependency>
 
-    <!--    &lt;!&ndash; spring-boot-starter-validation &ndash;&gt;-->
-    <!--    <dependency>-->
-    <!--      <groupId>org.springframework.boot</groupId>-->
-    <!--      <artifactId>spring-boot-starter-validation</artifactId>-->
-    <!--    </dependency>-->
+        <!-- spring-boot-starter-validation -->
+        <dependency>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
 
 
     <!-- liquibase-core -->

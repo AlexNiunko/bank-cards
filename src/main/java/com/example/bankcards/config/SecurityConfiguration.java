@@ -44,17 +44,17 @@ public class SecurityConfiguration {
         return http
             .csrf(AbstractHttpConfigurer::disable)
             .cors(CorsConfigurer::disable)
-            .authorizeHttpRequests(
-                request -> request
-                    .requestMatchers( "/bank-rest/auth").permitAll()
-                    .requestMatchers("/bank-rest/user/**").hasAuthority("ADMIN")
-                    .anyRequest().authenticated()
-            )
+//            .authorizeHttpRequests(
+//                request -> request
+//                    .requestMatchers( "/bank-rest/auth").permitAll()
+//                    .requestMatchers("/bank-rest/user/**").hasAuthority("ADMIN")
+//                    .anyRequest().authenticated()
+//            )
             .httpBasic(AbstractHttpConfigurer::disable)
             .formLogin(AbstractHttpConfigurer::disable)
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .exceptionHandling(exception -> new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
-            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+//            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
             .build();
 
     }

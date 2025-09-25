@@ -16,11 +16,21 @@
       <column name="password" type="VARCHAR(255)">
         <constraints nullable="false" unique="true"/>
       </column>
-      <column name="firstname" type="VARCHAR(255)"/>
-      <column name="lastname" type="VARCHAR(255)"/>
-      <column name="birth_date" type="DATE"/>
-      <column name="phone_number" type="VARCHAR(20)"/>
-      <column name="status" type="varchar(20)"/>
+      <column name="firstname" type="VARCHAR(255)">
+      <constraints nullable="false"/>
+      </column>
+      <column name="lastname" type="VARCHAR(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="birth_date" type="DATE">
+        <constraints nullable="false"/>
+      </column>
+      <column name="phone_number" type="VARCHAR(20)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="status" type="varchar(20)">
+        <constraints nullable="false"/>
+      </column>
     </createTable>
   </changeSet>
 </databaseChangeLog>

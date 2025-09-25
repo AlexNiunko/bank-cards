@@ -9,11 +9,9 @@ public record CardResponseDto(
     @NotNull
     Long cardId,
 
-    @NotNull
     @NotBlank
     String firstname,
 
-    @NotNull
     @NotBlank
     String lastname
 ) {

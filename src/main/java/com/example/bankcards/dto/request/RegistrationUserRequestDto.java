@@ -1,29 +1,32 @@
 package com.example.bankcards.dto.request;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import java.time.LocalDate;
 
 public record RegistrationUserRequestDto(
 
-    @NotNull
+    @Pattern(regexp = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$",
+        message = "Email должен быть валидным")
     String login,
 
-    @NotNull
+    @Pattern(regexp = "\\d+")
     String password,
 
-    @NotNull
+    @NotBlank
     String userRole,
 
-    @NotNull
+    @NotBlank
     String firstname,
 
-    @NotNull
+    @NotBlank
     String lastname,
 
     @NotNull
     LocalDate birthDate,
 
-    @NotNull
+    @Pattern(regexp = "\\+((375|7)\\d{9})")
     String phoneNumber
 ) {
 

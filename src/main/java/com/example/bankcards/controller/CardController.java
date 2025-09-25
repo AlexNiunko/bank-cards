@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -39,7 +40,7 @@ public class CardController {
             content = {@Content(schema = @Schema(implementation = ErrorResponseDto.class))})
     })
     @PostMapping("/create")
-    public CreateCardResponseDto createCard(CreateCardRequestDto dto) {
+    public CreateCardResponseDto createCard(@RequestBody @Valid CreateCardRequestDto dto) {
 
         return cardService.createCard(dto);
     }
@@ -55,7 +56,7 @@ public class CardController {
             content = {@Content(schema = @Schema(implementation = ErrorResponseDto.class))})
     })
     @PostMapping("/update")
-    public CardResponseDto updateCardStatus(@RequestBody UpdateCardStatusRequestDto dto) {
+    public CardResponseDto updateCardStatus(@RequestBody @Valid UpdateCardStatusRequestDto dto) {
 
         return cardService.updateCardStatus(dto);
     }
@@ -72,7 +73,7 @@ public class CardController {
             content = {@Content(schema = @Schema(implementation = ErrorResponseDto.class))})
     })
     @DeleteMapping("/delete")
-    public CardResponseDto deleteCard(@RequestBody Long cardId) {
+    public CardResponseDto deleteCard(@RequestBody @Valid Long cardId) {
 
         return cardService.deleteCard(cardId);
     }
@@ -87,7 +88,6 @@ public class CardController {
         @ApiResponse(responseCode = "500", description = "Ошибка на стороне сервера",
             content = {@Content(schema = @Schema(implementation = ErrorResponseDto.class))})
     })
-    @DeleteMapping("/delete")
     @GetMapping("/get-all-cards")
     public List<FullCardResponseDto> getAllCards(){
         return cardService.getAllCards();

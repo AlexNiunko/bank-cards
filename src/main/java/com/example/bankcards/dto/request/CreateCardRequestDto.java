@@ -1,6 +1,7 @@
 package com.example.bankcards.dto.request;
 
 import com.example.bankcards.entity.CurrencyType;
+import com.example.bankcards.entity.PaymentSystem;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import java.time.LocalDateTime;
@@ -12,7 +13,7 @@ public record CreateCardRequestDto(
 
     @Pattern(regexp = "^(VISA|MASTERCARD|MIR)$",
         message = "Разрешены только: VISA, MASTERCARD, MIR")
-    String paymentSystem,
+    PaymentSystem paymentSystem,
 
     @NotNull
     LocalDateTime expirationTime,

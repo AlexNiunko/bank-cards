@@ -12,6 +12,7 @@ import com.example.bankcards.entity.Users;
 import com.example.bankcards.repository.CardRepository;
 import com.example.bankcards.repository.UserRepository;
 import com.example.bankcards.service.CardService;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -113,8 +114,9 @@ public class CardServiceImpl implements CardService {
             .currency(dto.currency())
             .expirationTime(dto.expirationTime())
             .status(CardStatus.BLOCKED)
-            .system(PaymentSystem.valueOf(dto.paymentSystem()))
+            .system(dto.paymentSystem())
             .user(user)
+            .balance(BigDecimal.ZERO)
             .build();
 
     }

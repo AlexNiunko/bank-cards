@@ -4,6 +4,7 @@ import com.example.bankcards.dto.AppError;
 import com.example.bankcards.dto.request.AuthenticateRequestDto;
 import com.example.bankcards.dto.response.AuthenticateResponseDto;
 import com.example.bankcards.service.AuthService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -24,7 +25,7 @@ public class AuthController {
 
 
     @PostMapping("/auth")
-    public ResponseEntity<?> authenticate(@RequestBody AuthenticateRequestDto dto) {
+    public ResponseEntity<?> authenticate(@RequestBody @Valid AuthenticateRequestDto dto) {
 
         AuthenticateResponseDto responseDto = null;
 

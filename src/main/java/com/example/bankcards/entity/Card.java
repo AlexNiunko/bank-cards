@@ -37,7 +37,7 @@ public class Card {
 
     private String cardNumber;
 
-    private BigDecimal balance = BigDecimal.ZERO;
+    private BigDecimal balance;
 
     private LocalDateTime expirationTime;
 
