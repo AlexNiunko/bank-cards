@@ -1,5 +1,7 @@
 package com.example.bankcards.service.impl;
 
+import com.example.bankcards.dto.request.BalanceRequestDto;
+import com.example.bankcards.dto.request.RequestCardBlockDto;
 import com.example.bankcards.dto.request.TransferRequestDto;
 import com.example.bankcards.dto.response.BalanceResponseDto;
 import com.example.bankcards.dto.response.CardResponseBlockDto;
@@ -43,8 +45,13 @@ public class UserOperationServiceImpl implements UserOperationService {
 
     @Transactional
     @Override
-    public CardResponseBlockDto requestBlockCard(Long cardId) {
+    public CardResponseBlockDto requestBlockCard(RequestCardBlockDto dto) {
+        var cardId = dto.cardId();
+        var userId = dto.userId();
+
         var card = getCard(cardId);
+
+        checkCardOwner(card, userId);
 
         RequestCardBlock request = RequestCardBlock.builder()
             .card(card)
@@ -63,10 +70,15 @@ public class UserOperationServiceImpl implements UserOperationService {
     public TransferResponseDto transfer(TransferRequestDto dto) {
         Long fromCardId = dto.fromCardId();
         Long toCardId = dto.toCardId();
+        Long userId = dto.userId();
         BigDecimal amount = dto.amount();
 
         Card fromCard = getCard(fromCardId);
         Card toCard = getCard(toCardId);
+
+        if (!fromCard.getUser().getId().equals(userId) || !toCard.getUser().getId().equals(userId)) {
+            throw new RuntimeException("Неверный выбор карт для перевода");
+        }
 
         checkCardStatus(fromCard, fromCardId);
         checkCardStatus(toCard, toCardId);
@@ -83,10 +95,22 @@ public class UserOperationServiceImpl implements UserOperationService {
 
     @Transactional(readOnly = true)
     @Override
-    public BalanceResponseDto getBalance(Long cardId) {
+    public BalanceResponseDto getBalance(BalanceRequestDto dto) {
+        var cardId = dto.cardId();
+        var userId = dto.userId();
+
         var card = getCard(cardId);
+        checkCardOwner(card, userId);
 
         return getBalanceResponseDto(cardId, card);
+    }
+
+    private void checkCardOwner(Card card, Long userId) {
+        var cardOwnerId = card.getUser().getId();
+        if (!userId.equals(cardOwnerId)) {
+            throw new RuntimeException(
+                String.format("Карта с идентификатором:%s не является вашей собственностью", cardOwnerId));
+        }
     }
 
     private BalanceResponseDto getBalanceResponseDto(Long cardId, Card card) {
@@ -111,7 +135,7 @@ public class UserOperationServiceImpl implements UserOperationService {
             .currency(item.getCurrency())
             .cardId(item.getId())
             .balance(item.getBalance())
-            .userId(item.getId())
+            .userId(item.getUser().getId())
             .build();
     }
 

@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/bank-rest/card")
+@Tag(name = "Управление картами", description = "Предоставляет эндпоинты для управления картами")
 public class CardController {
 
     private final CardService cardService;
@@ -34,7 +36,7 @@ public class CardController {
         @ApiResponse(responseCode = "200", description = "Карта успешно создана"),
         @ApiResponse(responseCode = "401", description = "Неуспешная валидация токена",
             content = {@Content(schema = @Schema(implementation = ErrorResponseDto.class))}),
-        @ApiResponse(responseCode = "404", description = "Ресурс дял создания карты не найден",
+        @ApiResponse(responseCode = "404", description = "Ресурс для создания карты не найден",
             content = {@Content(schema = @Schema(implementation = ErrorResponseDto.class))}),
         @ApiResponse(responseCode = "500", description = "Ошибка на стороне сервера",
             content = {@Content(schema = @Schema(implementation = ErrorResponseDto.class))})

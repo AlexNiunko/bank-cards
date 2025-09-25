@@ -1,14 +1,13 @@
 package com.example.bankcards.config;
 
+import com.example.bankcards.security.JwtFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.authorization.AuthoritiesAuthorizationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -44,19 +43,21 @@ public class SecurityConfiguration {
         return http
             .csrf(AbstractHttpConfigurer::disable)
             .cors(CorsConfigurer::disable)
-//            .authorizeHttpRequests(
-//                request -> request
-//                    .requestMatchers( "/bank-rest/auth").permitAll()
-//                    .requestMatchers("/bank-rest/user/**").hasAuthority("ADMIN")
-//                    .anyRequest().authenticated()
-//            )
+            .authorizeHttpRequests(
+                request -> request
+                    .requestMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll()
+                    .requestMatchers( "/bank-rest/auth").permitAll()
+                    .requestMatchers("/bank-rest/user/**").hasAuthority("ADMIN")
+                    .requestMatchers("/bank-rest/card/**").hasAuthority("ADMIN")
+                    .requestMatchers("/bank-rest/user-operation/**").hasAuthority("USER")
+                    .anyRequest().authenticated()
+            )
             .httpBasic(AbstractHttpConfigurer::disable)
             .formLogin(AbstractHttpConfigurer::disable)
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .exceptionHandling(exception -> new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
-//            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
             .build();
-
     }
 
 

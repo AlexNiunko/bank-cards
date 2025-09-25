@@ -1,6 +1,6 @@
-package com.example.bankcards.config;
+package com.example.bankcards.security;
 
-import com.example.bankcards.dto.GenerateTokenDto;
+import com.example.bankcards.security.authentication.dto.GenerateTokenDto;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;

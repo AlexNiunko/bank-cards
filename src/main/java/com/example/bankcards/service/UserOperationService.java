@@ -1,5 +1,7 @@
 package com.example.bankcards.service;
 
+import com.example.bankcards.dto.request.BalanceRequestDto;
+import com.example.bankcards.dto.request.RequestCardBlockDto;
 import com.example.bankcards.dto.request.TransferRequestDto;
 import com.example.bankcards.dto.response.BalanceResponseDto;
 import com.example.bankcards.dto.response.CardResponseBlockDto;
@@ -11,9 +13,11 @@ public interface UserOperationService {
 
     List<FullCardResponseDto> getUserCards(Long userId);
 
-    CardResponseBlockDto requestBlockCard(Long cardId);
+    CardResponseBlockDto requestBlockCard(RequestCardBlockDto dto);
 
     TransferResponseDto transfer(TransferRequestDto dto);
 
-    BalanceResponseDto getBalance(Long cardId);
+    BalanceResponseDto getBalance(BalanceRequestDto dto);
+
+
 }

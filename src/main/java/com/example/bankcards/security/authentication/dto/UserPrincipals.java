@@ -1,4 +1,4 @@
-package com.example.bankcards.dto;
+package com.example.bankcards.security.authentication.dto;
 
 import com.example.bankcards.entity.ProfileStatus;
 import java.util.Collection;

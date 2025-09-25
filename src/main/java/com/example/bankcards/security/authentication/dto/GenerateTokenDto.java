@@ -1,4 +1,4 @@
-package com.example.bankcards.dto;
+package com.example.bankcards.security.authentication.dto;
 
 import java.util.List;
 import lombok.Builder;
