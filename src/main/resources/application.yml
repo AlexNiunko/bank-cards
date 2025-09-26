@@ -18,7 +18,10 @@ server:
   port: 8080
 jwt:
   lifetime: 30m
-  secret: 984hg493gh0439rthr0429uruj2309yh937gc763fe87t3f89723gf
+encoder:
+   secret: QMULq8kR3pVbV0w9q8e5j7nC2vF4hXyD
+   algoritm: AES
+
 logging:
   level:
     org.springframework.security: trace

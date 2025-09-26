@@ -23,8 +23,10 @@ VALUES (2, 1),
        (2, 3);
 
 insert into card (system, expiration_time, currency, card_number, user_id,balance,status)
-values ('VISA', '2026-11-29T14:00:00', 'EUR', '1234567891012134', 2,100.0,'ACTIVE'),
-       ('MASTERCARD', '2026-09-15T16:00:00', 'USD', '1111222234567889', 2,200.0,'BLOCKED'),
-       ('MASTERCARD', '2026-12-27T17:00:00', 'RUB', '9999888877771111', 2,150.0,'ACTIVE'),
-       ('VISA', '2027-10-17T12:00:00', 'USD', '8587455621543256', 3,50.0,'BLOCKED'),
-       ('MIR', '2027-10-17T18:00:00', 'RUB', '3298456521238789', 3,50.0,'ACTIVE');
+values ('VISA', '2026-11-29T14:00:00', 'EUR', 'GK+DcvWSku41La7J25gO+B8iaFSox1cFV2p3dTx1aOQ=', 2,100.0,'ACTIVE'),
+       ('MASTERCARD', '2026-09-15T16:00:00', 'USD', 'dKIICs+iQ2AHBoH6JmPZZR8iaFSox1cFV2p3dTx1aOQ=', 2,200.0,'BLOCKED'),
+       ('MASTERCARD', '2026-12-27T17:00:00', 'RUB', 'efJVoYahsWuRdFnbfzMTUh8iaFSox1cFV2p3dTx1aOQ=', 2,150.0,'ACTIVE'),
+       ('VISA', '2027-10-17T12:00:00', 'USD', 'e69YF8Wolx3a7IA69BQieh8iaFSox1cFV2p3dTx1aOQ=', 3,50.0,'BLOCKED'),
+       ('MIR', '2027-10-17T18:00:00', 'RUB', '50CesSpPtluGmT71bZkreh8iaFSox1cFV2p3dTx1aOQ=', 3,50.0,'ACTIVE');
+
+

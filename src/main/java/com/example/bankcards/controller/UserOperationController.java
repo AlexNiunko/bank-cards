@@ -1,6 +1,5 @@
 package com.example.bankcards.controller;
 
-import com.example.bankcards.dto.ErrorResponseDto;
 import com.example.bankcards.dto.request.BalanceRequestDto;
 import com.example.bankcards.dto.request.RequestCardBlockDto;
 import com.example.bankcards.dto.request.TransferRequestDto;
@@ -8,12 +7,14 @@ import com.example.bankcards.dto.response.BalanceResponseDto;
 import com.example.bankcards.dto.response.CardResponseBlockDto;
 import com.example.bankcards.dto.response.FullCardResponseDto;
 import com.example.bankcards.dto.response.TransferResponseDto;
+import com.example.bankcards.exception.dto.ErrorResponseDto;
 import com.example.bankcards.service.UserOperationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import java.util.List;
@@ -37,11 +38,14 @@ public class UserOperationController {
         @ApiResponse(responseCode = "200", description = "Карты успешно получены"),
         @ApiResponse(responseCode = "401", description = "Неуспешная валидация токена",
             content = {@Content(schema = @Schema(implementation = ErrorResponseDto.class))}),
+        @ApiResponse(responseCode = "403", description = "Отказано в доступе, неверная роль пользователя",
+            content = {@Content(schema = @Schema(implementation = ErrorResponseDto.class))}),
         @ApiResponse(responseCode = "404", description = "Ресурс для получения карт не найден",
             content = {@Content(schema = @Schema(implementation = ErrorResponseDto.class))}),
         @ApiResponse(responseCode = "500", description = "Ошибка на стороне сервера",
             content = {@Content(schema = @Schema(implementation = ErrorResponseDto.class))})
     })
+    @SecurityRequirement(name = "bearerAuth")
     @GetMapping("/get-user-cards")
     public List<FullCardResponseDto>getUserCard(@RequestBody Long userId){
         return userOperationService.getUserCards(userId);
@@ -52,11 +56,14 @@ public class UserOperationController {
         @ApiResponse(responseCode = "200", description = "Запрос успешно отправлен"),
         @ApiResponse(responseCode = "401", description = "Неуспешная валидация токена",
             content = {@Content(schema = @Schema(implementation = ErrorResponseDto.class))}),
+        @ApiResponse(responseCode = "403", description = "Отказано в доступе, неверная роль пользователя",
+            content = {@Content(schema = @Schema(implementation = ErrorResponseDto.class))}),
         @ApiResponse(responseCode = "404", description = "Ресурс для отправки запроса на блокировку не найден",
             content = {@Content(schema = @Schema(implementation = ErrorResponseDto.class))}),
         @ApiResponse(responseCode = "500", description = "Ошибка на стороне сервера",
             content = {@Content(schema = @Schema(implementation = ErrorResponseDto.class))})
     })
+    @SecurityRequirement(name = "bearerAuth")
     @PostMapping("/request-block-card")
     public CardResponseBlockDto requestBlockCard(@RequestBody @Valid RequestCardBlockDto dto){
         return userOperationService.requestBlockCard(dto);
@@ -67,11 +74,14 @@ public class UserOperationController {
         @ApiResponse(responseCode = "200", description = "Перевод завершился успешно"),
         @ApiResponse(responseCode = "401", description = "Неуспешная валидация токена",
             content = {@Content(schema = @Schema(implementation = ErrorResponseDto.class))}),
+        @ApiResponse(responseCode = "403", description = "Отказано в доступе, неверная роль пользователя",
+            content = {@Content(schema = @Schema(implementation = ErrorResponseDto.class))}),
         @ApiResponse(responseCode = "404", description = "Ресурс для перевода не найден",
             content = {@Content(schema = @Schema(implementation = ErrorResponseDto.class))}),
         @ApiResponse(responseCode = "500", description = "Ошибка на стороне сервера",
             content = {@Content(schema = @Schema(implementation = ErrorResponseDto.class))})
     })
+    @SecurityRequirement(name = "bearerAuth")
     @PostMapping("/transfer")
     public TransferResponseDto transfer(@RequestBody @Valid TransferRequestDto dto){
         return userOperationService.transfer(dto);
@@ -82,11 +92,14 @@ public class UserOperationController {
         @ApiResponse(responseCode = "200", description = "Баланс карты успешно получены"),
         @ApiResponse(responseCode = "401", description = "Неуспешная валидация токена",
             content = {@Content(schema = @Schema(implementation = ErrorResponseDto.class))}),
+        @ApiResponse(responseCode = "403", description = "Отказано в доступе, неверная роль пользователя",
+            content = {@Content(schema = @Schema(implementation = ErrorResponseDto.class))}),
         @ApiResponse(responseCode = "404", description = "Ресурс для получения баланса карты не найден",
             content = {@Content(schema = @Schema(implementation = ErrorResponseDto.class))}),
         @ApiResponse(responseCode = "500", description = "Ошибка на стороне сервера",
             content = {@Content(schema = @Schema(implementation = ErrorResponseDto.class))})
     })
+    @SecurityRequirement(name = "bearerAuth")
     @GetMapping("/balance")
     public BalanceResponseDto getBalance(@RequestBody @Valid BalanceRequestDto dto){
         return userOperationService.getBalance(dto);

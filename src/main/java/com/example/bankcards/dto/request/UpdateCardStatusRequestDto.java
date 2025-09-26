@@ -16,7 +16,7 @@ public record UpdateCardStatusRequestDto(
     @Pattern(regexp = "^(ACTIVE|BLOCKED|EXPIRED)$",
         flags = Pattern.Flag.CASE_INSENSITIVE,
         message = "Разрешены только: ACTIVE, BLOCKED, EXPIRED")
-    CardStatus status
+    String status
 ) {
 
 }

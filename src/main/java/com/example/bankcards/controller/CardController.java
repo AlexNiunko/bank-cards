@@ -1,17 +1,19 @@
 package com.example.bankcards.controller;
 
-import com.example.bankcards.dto.ErrorResponseDto;
 import com.example.bankcards.dto.request.CreateCardRequestDto;
 import com.example.bankcards.dto.request.UpdateCardStatusRequestDto;
 import com.example.bankcards.dto.response.CardResponseDto;
 import com.example.bankcards.dto.response.CreateCardResponseDto;
 import com.example.bankcards.dto.response.FullCardResponseDto;
+import com.example.bankcards.exception.dto.ErrorResponseDto;
+import com.example.bankcards.exception.dto.ErrorResponseDto;
 import com.example.bankcards.service.CardService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import java.util.List;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -36,27 +39,34 @@ public class CardController {
         @ApiResponse(responseCode = "200", description = "Карта успешно создана"),
         @ApiResponse(responseCode = "401", description = "Неуспешная валидация токена",
             content = {@Content(schema = @Schema(implementation = ErrorResponseDto.class))}),
+        @ApiResponse(responseCode = "403", description = "Отказано в доступе, неверная роль пользователя",
+            content = {@Content(schema = @Schema(implementation = ErrorResponseDto.class))}),
         @ApiResponse(responseCode = "404", description = "Ресурс для создания карты не найден",
             content = {@Content(schema = @Schema(implementation = ErrorResponseDto.class))}),
         @ApiResponse(responseCode = "500", description = "Ошибка на стороне сервера",
             content = {@Content(schema = @Schema(implementation = ErrorResponseDto.class))})
     })
+    @SecurityRequirement(name = "bearerAuth")
     @PostMapping("/create")
-    public CreateCardResponseDto createCard(@RequestBody @Valid CreateCardRequestDto dto) {
-
+    public CreateCardResponseDto createCard(
+        @RequestHeader("Authorization") String headerValue,
+        @RequestBody @Valid CreateCardRequestDto dto) {
         return cardService.createCard(dto);
     }
 
-    @Operation(summary = "Заблокировать данную карту")
+    @Operation(summary = "Установить статус для данной карты(заблокировать или активировать)")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Карта заблокирована"),
+        @ApiResponse(responseCode = "200", description = "Статус установлен"),
         @ApiResponse(responseCode = "401", description = "Неуспешная валидация токена",
+            content = {@Content(schema = @Schema(implementation = ErrorResponseDto.class))}),
+        @ApiResponse(responseCode = "403", description = "Отказано в доступе, неверная роль пользователя",
             content = {@Content(schema = @Schema(implementation = ErrorResponseDto.class))}),
         @ApiResponse(responseCode = "404", description = "Ресурс для блокирования карты не найден",
             content = {@Content(schema = @Schema(implementation = ErrorResponseDto.class))}),
         @ApiResponse(responseCode = "500", description = "Ошибка на стороне сервера",
             content = {@Content(schema = @Schema(implementation = ErrorResponseDto.class))})
     })
+    @SecurityRequirement(name = "bearerAuth")
     @PostMapping("/update")
     public CardResponseDto updateCardStatus(@RequestBody @Valid UpdateCardStatusRequestDto dto) {
 
@@ -69,11 +79,14 @@ public class CardController {
         @ApiResponse(responseCode = "200", description = "Карта удалена"),
         @ApiResponse(responseCode = "401", description = "Неуспешная валидация токена",
             content = {@Content(schema = @Schema(implementation = ErrorResponseDto.class))}),
+        @ApiResponse(responseCode = "403", description = "Отказано в доступе, неверная роль пользователя",
+            content = {@Content(schema = @Schema(implementation = ErrorResponseDto.class))}),
         @ApiResponse(responseCode = "404", description = "Ресурс для активирования карты не найден",
             content = {@Content(schema = @Schema(implementation = ErrorResponseDto.class))}),
         @ApiResponse(responseCode = "500", description = "Ошибка на стороне сервера",
             content = {@Content(schema = @Schema(implementation = ErrorResponseDto.class))})
     })
+    @SecurityRequirement(name = "bearerAuth")
     @DeleteMapping("/delete")
     public CardResponseDto deleteCard(@RequestBody @Valid Long cardId) {
 
@@ -85,11 +98,14 @@ public class CardController {
         @ApiResponse(responseCode = "200", description = "Карты получены"),
         @ApiResponse(responseCode = "401", description = "Неуспешная валидация токена",
             content = {@Content(schema = @Schema(implementation = ErrorResponseDto.class))}),
+        @ApiResponse(responseCode = "403", description = "Отказано в доступе, неверная роль пользователя",
+            content = {@Content(schema = @Schema(implementation = ErrorResponseDto.class))}),
         @ApiResponse(responseCode = "404", description = "Ресурс для получения карт не найден",
             content = {@Content(schema = @Schema(implementation = ErrorResponseDto.class))}),
         @ApiResponse(responseCode = "500", description = "Ошибка на стороне сервера",
             content = {@Content(schema = @Schema(implementation = ErrorResponseDto.class))})
     })
+    @SecurityRequirement(name = "bearerAuth")
     @GetMapping("/get-all-cards")
     public List<FullCardResponseDto> getAllCards(){
         return cardService.getAllCards();

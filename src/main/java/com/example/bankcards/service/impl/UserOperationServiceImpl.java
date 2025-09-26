@@ -1,5 +1,12 @@
 package com.example.bankcards.service.impl;
 
+import static com.example.bankcards.util.ExceptionMessage.CARDS_DOES_NOT_OWN_USER;
+import static com.example.bankcards.util.ExceptionMessage.CARD_BLOCKED;
+import static com.example.bankcards.util.ExceptionMessage.CARD_DOES_NOT_OWN_USER;
+import static com.example.bankcards.util.ExceptionMessage.CARD_NOT_FOUND_BY_ID;
+import static com.example.bankcards.util.ExceptionMessage.INSUFFICIENT_FUNDS_ON_THE_CARD;
+import static com.example.bankcards.util.ExceptionMessage.USER_NOT_FOUND_BY_ID;
+
 import com.example.bankcards.dto.request.BalanceRequestDto;
 import com.example.bankcards.dto.request.RequestCardBlockDto;
 import com.example.bankcards.dto.request.TransferRequestDto;
@@ -11,6 +18,7 @@ import com.example.bankcards.entity.Card;
 import com.example.bankcards.entity.CardStatus;
 import com.example.bankcards.entity.RequestCardBlock;
 import com.example.bankcards.entity.Users;
+import com.example.bankcards.exception.BusinessException;
 import com.example.bankcards.repository.CardRepository;
 import com.example.bankcards.repository.RequestCardBlockRepository;
 import com.example.bankcards.repository.UserRepository;
@@ -37,7 +45,7 @@ public class UserOperationServiceImpl implements UserOperationService {
     public List<FullCardResponseDto> getUserCards(Long userId) {
         List<FullCardResponseDto> result = new ArrayList<>();
         Users user = userRepository.findById(userId).orElseThrow(
-            () -> new RuntimeException(String.format("Пользователя с идентификатором: %s не найдено", userId))
+            () -> new BusinessException(String.format(USER_NOT_FOUND_BY_ID, userId))
         );
         cardRepository.getAllByUser(user).forEach(item -> result.add(getFullCardResponseDto(item)));
         return result;
@@ -77,7 +85,8 @@ public class UserOperationServiceImpl implements UserOperationService {
         Card toCard = getCard(toCardId);
 
         if (!fromCard.getUser().getId().equals(userId) || !toCard.getUser().getId().equals(userId)) {
-            throw new RuntimeException("Неверный выбор карт для перевода");
+            throw new BusinessException(
+                String.format(CARDS_DOES_NOT_OWN_USER,userId));
         }
 
         checkCardStatus(fromCard, fromCardId);
@@ -108,8 +117,8 @@ public class UserOperationServiceImpl implements UserOperationService {
     private void checkCardOwner(Card card, Long userId) {
         var cardOwnerId = card.getUser().getId();
         if (!userId.equals(cardOwnerId)) {
-            throw new RuntimeException(
-                String.format("Карта с идентификатором:%s не является вашей собственностью", cardOwnerId));
+            throw new BusinessException(
+                String.format(CARD_DOES_NOT_OWN_USER,card.getId() ,cardOwnerId));
         }
     }
 
@@ -122,7 +131,7 @@ public class UserOperationServiceImpl implements UserOperationService {
 
     private Card getCard(Long cardId) {
         return cardRepository.findById(cardId).orElseThrow(
-            () -> new RuntimeException(String.format("Карты с идентификатором: %s не найдено", cardId)));
+            () -> new BusinessException(String.format(CARD_NOT_FOUND_BY_ID, cardId)));
 
     }
 
@@ -149,14 +158,14 @@ public class UserOperationServiceImpl implements UserOperationService {
 
     private void checkCardBalance(Card fromCard, BigDecimal amount, Long fromCardId) {
         if (fromCard.getBalance().compareTo(amount) < 0) {
-            throw new RuntimeException(
-                String.format("Не достаточно средств на карте с идентификатором: %s", fromCardId));
+            throw new BusinessException(
+                String.format(INSUFFICIENT_FUNDS_ON_THE_CARD, fromCardId));
         }
     }
 
     private void checkCardStatus(Card fromCard, Long fromCardId) {
         if (fromCard.getStatus().equals(CardStatus.BLOCKED)) {
-            throw new RuntimeException(String.format("Карта с идентификатором: %s заблокирована", fromCardId));
+            throw new BusinessException(String.format(CARD_BLOCKED, fromCardId));
         }
     }
 

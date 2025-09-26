@@ -1,5 +1,9 @@
 package com.example.bankcards.service.impl;
 
+import static com.example.bankcards.util.ExceptionMessage.ROLE_NOT_EXIST;
+import static com.example.bankcards.util.ExceptionMessage.USER_NOT_EXIST_BY_LOGIN;
+import static com.example.bankcards.util.ExceptionMessage.USER_NOT_FOUND_BY_ID;
+
 import com.example.bankcards.dto.request.RegistrationUserRequestDto;
 import com.example.bankcards.dto.request.UpdateUserStatusRequestDto;
 import com.example.bankcards.dto.response.FullUserResponseDto;
@@ -8,6 +12,7 @@ import com.example.bankcards.entity.ProfileStatus;
 import com.example.bankcards.entity.Role;
 import com.example.bankcards.entity.UserInfo;
 import com.example.bankcards.entity.Users;
+import com.example.bankcards.exception.BusinessException;
 import com.example.bankcards.repository.RoleRepository;
 import com.example.bankcards.repository.UserRepository;
 import com.example.bankcards.service.UserService;
@@ -22,8 +27,12 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
+    private static final String USER = "USER";
+
     private final UserRepository userRepository;
+
     private final RoleRepository roleRepository;
+
     private final BCryptPasswordEncoder passwordEncoder;
 
     @Transactional
@@ -33,12 +42,12 @@ public class UserServiceImpl implements UserService {
 
         userRepository.findByLogin(login)
             .ifPresent(u -> {
-                throw new RuntimeException(String.format("Пользователь с логином: %s уже существует", login));
+                throw new BusinessException(String.format(USER_NOT_EXIST_BY_LOGIN, login));
             });
 
-        Role role = roleRepository.findByName("USER")
+        Role role = roleRepository.findByName(USER)
             .orElseThrow(
-                () -> new RuntimeException(String.format("Роли : %s не существует", "USER"))
+                () -> new BusinessException(String.format(ROLE_NOT_EXIST, USER))
             );
 
         var user = getUser(dto, role);
@@ -124,7 +133,7 @@ public class UserServiceImpl implements UserService {
 
     private Users getUsers(Long userId) {
         return userRepository.findById(userId).orElseThrow(
-            () -> new RuntimeException(String.format("Пользователя с идентификатором: %s не найдено", userId))
+            () -> new BusinessException(String.format(USER_NOT_FOUND_BY_ID, userId))
         );
 
     }

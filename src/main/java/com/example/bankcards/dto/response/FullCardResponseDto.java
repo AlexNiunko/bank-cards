@@ -3,6 +3,8 @@ package com.example.bankcards.dto.response;
 import com.example.bankcards.entity.CardStatus;
 import com.example.bankcards.entity.CurrencyType;
 import com.example.bankcards.entity.PaymentSystem;
+import com.example.bankcards.util.MaskType;
+import com.example.bankcards.util.Masked;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -21,6 +23,7 @@ public record FullCardResponseDto(
     @Schema(description = "Платежная система карты")
     PaymentSystem paymentSystem,
 
+    @Masked(type = MaskType.CREDIT_CARD)
     @Schema(description = "Номер карты")
     String cardNumber,
 

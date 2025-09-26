@@ -7,12 +7,15 @@ import com.example.bankcards.dto.request.AuthenticateRequestDto;
 import com.example.bankcards.dto.response.AuthenticateResponseDto;
 import com.example.bankcards.security.authentication.dto.UserPrincipals;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -20,7 +23,9 @@ import org.springframework.stereotype.Service;
 public class AuthServiceImpl implements AuthService {
 
     private final UserDetailsService service;
+
     private final JwtTokenUtils jwtTokenUtils;
+
     private final AuthenticationManager authenticationManager;
 
     @Override
@@ -31,7 +36,7 @@ public class AuthServiceImpl implements AuthService {
                 new UsernamePasswordAuthenticationToken(dto.login(), dto.password())
             );
         } catch (BadCredentialsException e) {
-            throw new RuntimeException("Неверный логин или пароль");
+            throw new AuthenticationCredentialsNotFoundException("Неверный логин");
         }
 
         UserDetails userDetails = service.loadUserByUsername(dto.login());

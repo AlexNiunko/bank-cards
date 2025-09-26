@@ -1,5 +1,9 @@
 package com.example.bankcards.service.impl;
 
+import static com.example.bankcards.util.ExceptionMessage.CARD_NOT_FOUND_BY_ID;
+import static com.example.bankcards.util.ExceptionMessage.DUPLICATE_CARD;
+import static com.example.bankcards.util.ExceptionMessage.USER_NOT_EXIST_BY_ID;
+
 import com.example.bankcards.dto.request.CreateCardRequestDto;
 import com.example.bankcards.dto.request.UpdateCardStatusRequestDto;
 import com.example.bankcards.dto.response.CardResponseDto;
@@ -7,16 +11,16 @@ import com.example.bankcards.dto.response.CreateCardResponseDto;
 import com.example.bankcards.dto.response.FullCardResponseDto;
 import com.example.bankcards.entity.Card;
 import com.example.bankcards.entity.CardStatus;
-import com.example.bankcards.entity.PaymentSystem;
 import com.example.bankcards.entity.Users;
+import com.example.bankcards.exception.BusinessException;
 import com.example.bankcards.repository.CardRepository;
 import com.example.bankcards.repository.UserRepository;
 import com.example.bankcards.service.CardService;
+import com.example.bankcards.util.EncryptionService;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,19 +32,22 @@ public class CardServiceImpl implements CardService {
 
     private final UserRepository userRepository;
 
+    private final EncryptionService service;
+    private final EncryptionService encryptionService;
+
     @Transactional
     @Override
     public CreateCardResponseDto createCard(CreateCardRequestDto dto) {
         String cardNumber = dto.cardNumber();
         List<Card> cardList = cardRepository.findByCardNumber(cardNumber);
         if (!cardList.isEmpty()) {
-            throw new RuntimeException(String.format("Карта с номером - %s уже существует", cardNumber));
+            throw new BusinessException(String.format(DUPLICATE_CARD, cardNumber));
         }
 
         Long userId = dto.userId();
 
         Users user = userRepository.findById(userId).orElseThrow(
-            () -> new RuntimeException(String.format("Пользователя с id: %s не существует", userId)));
+            () -> new BusinessException(String.format(USER_NOT_EXIST_BY_ID, userId)));
 
         Card card = getCard(dto, user);
 
@@ -68,7 +75,7 @@ public class CardServiceImpl implements CardService {
 
         var card = getCard(cardId);
 
-        card.setStatus(dto.status());
+        card.setStatus(CardStatus.valueOf(dto.status()));
 
         cardRepository.save(card);
 
@@ -91,7 +98,7 @@ public class CardServiceImpl implements CardService {
     private FullCardResponseDto getFullCardResponseDto(Card item) {
         return FullCardResponseDto.builder()
             .cardId(item.getId())
-            .cardNumber(item.getCardNumber())
+            .cardNumber(encryptionService.decrypt(item.getCardNumber()))
             .balance(item.getBalance())
             .paymentSystem(item.getSystem())
             .status(item.getStatus())
@@ -111,7 +118,7 @@ public class CardServiceImpl implements CardService {
 
     private Card getCard(CreateCardRequestDto dto, Users user) {
         return Card.builder()
-            .cardNumber(dto.cardNumber())
+            .cardNumber(encryptionService.encrypt(dto.cardNumber()))
             .currency(dto.currency())
             .expirationTime(dto.expirationTime())
             .status(CardStatus.BLOCKED)
@@ -132,7 +139,7 @@ public class CardServiceImpl implements CardService {
 
     private Card getCard(Long cardId) {
         return cardRepository.findById(cardId).orElseThrow(
-            () -> new RuntimeException(String.format("Карты с идентификатором: %s", cardId))
+            () -> new BusinessException(String.format(CARD_NOT_FOUND_BY_ID, cardId))
         );
     }
 }
