@@ -61,7 +61,7 @@ public class MaskingSerializer extends StdSerializer<String> implements Contextu
     private String maskCreditCard(String cardNumber) {
         String lastFour = cardNumber.substring(cardNumber.length() - 4);
         String maskedPart = String.valueOf(masked.maskChar()).repeat(cardNumber.length() - 4);
-        return String.join(maskedPart, lastFour);
+        return maskedPart + lastFour;
     }
 
     private String maskPhone(String phone) {
@@ -78,7 +78,7 @@ public class MaskingSerializer extends StdSerializer<String> implements Contextu
         String suffix = digits.substring(digits.length() - visibleSuffix);
         String maskedPart = String.valueOf(masked.maskChar()).repeat(digits.length() - visiblePrefix - visibleSuffix);
 
-        return String.join(prefix,maskedPart,suffix);
+        return String.join(prefix, maskedPart, suffix);
     }
 
     private String maskEmail(String email) {

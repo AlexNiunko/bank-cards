@@ -74,10 +74,10 @@ public class CardCriteriaRepositoryImpl implements CardCriteriaRepository {
         List<Predicate> predicates = new ArrayList<>();
 
         if (maxBalance != null) {
-            predicates.add(cb.le(root.get("balance"), maxBalance));
+            predicates.add(cb.ge(root.get("balance"), maxBalance));
         }
         if (minBalance != null) {
-            predicates.add(cb.ge(root.get("balance"), minBalance));
+            predicates.add(cb.le(root.get("balance"), minBalance));
         }
         if (cardStatus != null) {
             predicates.add(cb.equal(root.get("status"), CardStatus.valueOf(cardStatus)));

@@ -2,6 +2,7 @@ package com.example.bankcards.controller;
 
 import com.example.bankcards.dto.request.CreateCardRequestDto;
 import com.example.bankcards.dto.request.FilterCardRequestDto;
+import com.example.bankcards.dto.request.PageableCardRequest;
 import com.example.bankcards.dto.request.UpdateCardStatusRequestDto;
 import com.example.bankcards.dto.response.CardResponseDto;
 import com.example.bankcards.dto.response.CreateCardResponseDto;
@@ -110,11 +111,11 @@ public class CardController {
     })
     @SecurityRequirement(name = "bearerAuth")
     @GetMapping("/get-all-cards")
-    public List<FullCardResponseDto> getAllCards(){
+    public List<FullCardResponseDto> getAllCards() {
         return cardService.getAllCards();
     }
 
-    @Operation(summary = "Получить все карты о фильтру")
+    @Operation(summary = "Получить все карты по фильтру")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Карты получены"),
         @ApiResponse(responseCode = "401", description = "Неуспешная валидация токена",
@@ -127,8 +128,26 @@ public class CardController {
             content = {@Content(schema = @Schema(implementation = ErrorResponseDto.class))})
     })
     @SecurityRequirement(name = "bearerAuth")
-    @GetMapping("/get-all-cards-by-filter")
-    public List<FullCardResponseDto> getAllCardsByFilter(@RequestBody @Valid FilterCardRequestDto dto){
+    @PostMapping("/get-all-cards-by-filter")
+    public List<FullCardResponseDto> getAllCardsByFilter(@RequestBody @Valid FilterCardRequestDto dto) {
         return criteriaRepository.getCardsByFilter(dto);
+    }
+
+    @Operation(summary = "Получить все карты по фильтру")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Карты получены"),
+        @ApiResponse(responseCode = "401", description = "Неуспешная валидация токена",
+            content = {@Content(schema = @Schema(implementation = ErrorResponseDto.class))}),
+        @ApiResponse(responseCode = "403", description = "Отказано в доступе, неверная роль пользователя",
+            content = {@Content(schema = @Schema(implementation = ErrorResponseDto.class))}),
+        @ApiResponse(responseCode = "404", description = "Ресурс для получения карт не найден",
+            content = {@Content(schema = @Schema(implementation = ErrorResponseDto.class))}),
+        @ApiResponse(responseCode = "500", description = "Ошибка на стороне сервера",
+            content = {@Content(schema = @Schema(implementation = ErrorResponseDto.class))})
+    })
+    @SecurityRequirement(name = "bearerAuth")
+    @PostMapping("/get-all-cards-using-page")
+    public List<FullCardResponseDto> getAllCardsByPage(@RequestBody @Valid PageableCardRequest dto) {
+        return cardService.getAllCardsUsingPageable(dto);
     }
 }
