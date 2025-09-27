@@ -1,12 +1,13 @@
 package com.example.bankcards.controller;
 
 import com.example.bankcards.dto.request.CreateCardRequestDto;
+import com.example.bankcards.dto.request.FilterCardRequestDto;
 import com.example.bankcards.dto.request.UpdateCardStatusRequestDto;
 import com.example.bankcards.dto.response.CardResponseDto;
 import com.example.bankcards.dto.response.CreateCardResponseDto;
 import com.example.bankcards.dto.response.FullCardResponseDto;
 import com.example.bankcards.exception.dto.ErrorResponseDto;
-import com.example.bankcards.exception.dto.ErrorResponseDto;
+import com.example.bankcards.repository.criteria.CardCriteriaRepositoryImpl;
 import com.example.bankcards.service.CardService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -33,6 +34,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class CardController {
 
     private final CardService cardService;
+
+    private final CardCriteriaRepositoryImpl criteriaRepository;
 
     @Operation(summary = "Создать новую карту")
     @ApiResponses(value = {
@@ -111,4 +114,21 @@ public class CardController {
         return cardService.getAllCards();
     }
 
+    @Operation(summary = "Получить все карты о фильтру")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Карты получены"),
+        @ApiResponse(responseCode = "401", description = "Неуспешная валидация токена",
+            content = {@Content(schema = @Schema(implementation = ErrorResponseDto.class))}),
+        @ApiResponse(responseCode = "403", description = "Отказано в доступе, неверная роль пользователя",
+            content = {@Content(schema = @Schema(implementation = ErrorResponseDto.class))}),
+        @ApiResponse(responseCode = "404", description = "Ресурс для получения карт не найден",
+            content = {@Content(schema = @Schema(implementation = ErrorResponseDto.class))}),
+        @ApiResponse(responseCode = "500", description = "Ошибка на стороне сервера",
+            content = {@Content(schema = @Schema(implementation = ErrorResponseDto.class))})
+    })
+    @SecurityRequirement(name = "bearerAuth")
+    @GetMapping("/get-all-cards-by-filter")
+    public List<FullCardResponseDto> getAllCardsByFilter(@RequestBody @Valid FilterCardRequestDto dto){
+        return criteriaRepository.getCardsByFilter(dto);
+    }
 }

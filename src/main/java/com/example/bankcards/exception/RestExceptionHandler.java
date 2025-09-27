@@ -1,9 +1,9 @@
 package com.example.bankcards.exception;
 
-import static com.example.bankcards.util.ErrorMessage.AUTHENTICATION_ERROR;
-import static com.example.bankcards.util.ErrorMessage.BUSINESS_ERROR;
-import static com.example.bankcards.util.ErrorMessage.ENCRYPTION_ERROR;
-import static com.example.bankcards.util.ErrorMessage.VALIDATION_ERROR;
+import static com.example.bankcards.util.encryption.ErrorMessage.AUTHENTICATION_ERROR;
+import static com.example.bankcards.util.encryption.ErrorMessage.BUSINESS_ERROR;
+import static com.example.bankcards.util.encryption.ErrorMessage.ENCRYPTION_ERROR;
+import static com.example.bankcards.util.encryption.ErrorMessage.VALIDATION_ERROR;
 
 import com.example.bankcards.exception.dto.ErrorResponseDto;
 import java.util.HashMap;

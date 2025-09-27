@@ -1,8 +1,8 @@
 package com.example.bankcards.service.impl;
 
-import static com.example.bankcards.util.ExceptionMessage.CARD_NOT_FOUND_BY_ID;
-import static com.example.bankcards.util.ExceptionMessage.DUPLICATE_CARD;
-import static com.example.bankcards.util.ExceptionMessage.USER_NOT_EXIST_BY_ID;
+import static com.example.bankcards.util.encryption.ExceptionMessage.CARD_NOT_FOUND_BY_ID;
+import static com.example.bankcards.util.encryption.ExceptionMessage.DUPLICATE_CARD;
+import static com.example.bankcards.util.encryption.ExceptionMessage.USER_NOT_EXIST_BY_ID;
 
 import com.example.bankcards.dto.request.CreateCardRequestDto;
 import com.example.bankcards.dto.request.UpdateCardStatusRequestDto;
@@ -16,7 +16,7 @@ import com.example.bankcards.exception.BusinessException;
 import com.example.bankcards.repository.CardRepository;
 import com.example.bankcards.repository.UserRepository;
 import com.example.bankcards.service.CardService;
-import com.example.bankcards.util.EncryptionService;
+import com.example.bankcards.util.encryption.EncryptionService;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;

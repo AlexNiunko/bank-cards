@@ -1,8 +1,8 @@
 package com.example.bankcards.service.impl;
 
-import static com.example.bankcards.util.ExceptionMessage.ROLE_NOT_EXIST;
-import static com.example.bankcards.util.ExceptionMessage.USER_NOT_EXIST_BY_LOGIN;
-import static com.example.bankcards.util.ExceptionMessage.USER_NOT_FOUND_BY_ID;
+import static com.example.bankcards.util.encryption.ExceptionMessage.ROLE_NOT_EXIST;
+import static com.example.bankcards.util.encryption.ExceptionMessage.USER_NOT_EXIST_BY_LOGIN;
+import static com.example.bankcards.util.encryption.ExceptionMessage.USER_NOT_FOUND_BY_ID;
 
 import com.example.bankcards.dto.request.RegistrationUserRequestDto;
 import com.example.bankcards.dto.request.UpdateUserStatusRequestDto;

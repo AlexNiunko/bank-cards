@@ -1,11 +1,11 @@
 package com.example.bankcards.service.impl;
 
-import static com.example.bankcards.util.ExceptionMessage.CARDS_DOES_NOT_OWN_USER;
-import static com.example.bankcards.util.ExceptionMessage.CARD_BLOCKED;
-import static com.example.bankcards.util.ExceptionMessage.CARD_DOES_NOT_OWN_USER;
-import static com.example.bankcards.util.ExceptionMessage.CARD_NOT_FOUND_BY_ID;
-import static com.example.bankcards.util.ExceptionMessage.INSUFFICIENT_FUNDS_ON_THE_CARD;
-import static com.example.bankcards.util.ExceptionMessage.USER_NOT_FOUND_BY_ID;
+import static com.example.bankcards.util.encryption.ExceptionMessage.CARDS_DOES_NOT_OWN_USER;
+import static com.example.bankcards.util.encryption.ExceptionMessage.CARD_BLOCKED;
+import static com.example.bankcards.util.encryption.ExceptionMessage.CARD_DOES_NOT_OWN_USER;
+import static com.example.bankcards.util.encryption.ExceptionMessage.CARD_NOT_FOUND_BY_ID;
+import static com.example.bankcards.util.encryption.ExceptionMessage.INSUFFICIENT_FUNDS_ON_THE_CARD;
+import static com.example.bankcards.util.encryption.ExceptionMessage.USER_NOT_FOUND_BY_ID;
 
 import com.example.bankcards.dto.request.BalanceRequestDto;
 import com.example.bankcards.dto.request.RequestCardBlockDto;

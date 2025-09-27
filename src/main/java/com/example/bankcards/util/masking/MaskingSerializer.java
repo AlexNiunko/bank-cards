@@ -1,4 +1,4 @@
-package com.example.bankcards.util;
+package com.example.bankcards.util.masking;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.BeanProperty;

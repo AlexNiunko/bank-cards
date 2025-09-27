@@ -1,8 +1,8 @@
 package com.example.bankcards.dto.response;
 
 import com.example.bankcards.entity.ProfileStatus;
-import com.example.bankcards.util.MaskType;
-import com.example.bankcards.util.Masked;
+import com.example.bankcards.util.masking.MaskType;
+import com.example.bankcards.util.masking.Masked;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDate;
 import java.util.List;

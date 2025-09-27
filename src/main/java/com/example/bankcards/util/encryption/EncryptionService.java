@@ -1,4 +1,4 @@
-package com.example.bankcards.util;
+package com.example.bankcards.util.encryption;
 
 import com.example.bankcards.exception.EncryptionException;
 import jakarta.annotation.PostConstruct;
