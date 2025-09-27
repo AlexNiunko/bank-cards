@@ -86,7 +86,7 @@ public class UserOperationServiceImpl implements UserOperationService {
 
         if (!fromCard.getUser().getId().equals(userId) || !toCard.getUser().getId().equals(userId)) {
             throw new BusinessException(
-                String.format(CARDS_DOES_NOT_OWN_USER,userId));
+                String.format(CARDS_DOES_NOT_OWN_USER, userId));
         }
 
         checkCardStatus(fromCard, fromCardId);
@@ -118,7 +118,7 @@ public class UserOperationServiceImpl implements UserOperationService {
         var cardOwnerId = card.getUser().getId();
         if (!userId.equals(cardOwnerId)) {
             throw new BusinessException(
-                String.format(CARD_DOES_NOT_OWN_USER,card.getId() ,cardOwnerId));
+                String.format(CARD_DOES_NOT_OWN_USER, card.getId(), cardOwnerId));
         }
     }
 

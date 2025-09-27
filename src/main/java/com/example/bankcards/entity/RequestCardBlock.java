@@ -27,7 +27,7 @@ public class RequestCardBlock {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name="card_id")
+    @JoinColumn(name = "card_id")
     private Card card;
 
     @CreationTimestamp

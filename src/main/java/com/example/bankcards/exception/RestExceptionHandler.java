@@ -20,7 +20,7 @@ public class RestExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ErrorResponseDto handleValidationErrors(MethodArgumentNotValidException ex) {
 
-        Map <String,String> errors=new HashMap<>();
+        Map<String, String> errors = new HashMap<>();
 
         ex.getBindingResult()
             .getFieldErrors()

@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface CardCriteriaRepository {
 
-    public List<FullCardResponseDto> getCardsByFilter(FilterCardRequestDto dto);
+    List<FullCardResponseDto> getCardsByFilter(FilterCardRequestDto dto);
 
 }

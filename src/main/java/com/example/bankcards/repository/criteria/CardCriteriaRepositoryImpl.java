@@ -48,23 +48,23 @@ public class CardCriteriaRepositoryImpl implements CardCriteriaRepository {
     private void fillResultList(CriteriaQuery<Card> query, List<FullCardResponseDto> result) {
         entityManager.createQuery(query)
             .getResultList()
-            .forEach(item->
-                    result.add(
-                        FullCardResponseDto.builder()
-                            .cardNumber(encryptionService.decrypt(item.getCardNumber()))
-                            .userId(item.getUser().getId())
-                            .cardId(item.getId())
-                            .expirationTime(item.getExpirationTime())
-                            .status(item.getStatus())
-                            .currency(item.getCurrency())
-                            .paymentSystem(item.getSystem())
-                            .balance(item.getBalance())
-                            .build()
-                    )
-                );
+            .forEach(item ->
+                result.add(
+                    FullCardResponseDto.builder()
+                        .cardNumber(encryptionService.decrypt(item.getCardNumber()))
+                        .userId(item.getUser().getId())
+                        .cardId(item.getId())
+                        .expirationTime(item.getExpirationTime())
+                        .status(item.getStatus())
+                        .currency(item.getCurrency())
+                        .paymentSystem(item.getSystem())
+                        .balance(item.getBalance())
+                        .build()
+                )
+            );
     }
 
-    private List<Predicate> getPredicates(CriteriaBuilder cb,Root<Card> root,FilterCardRequestDto dto){
+    private List<Predicate> getPredicates(CriteriaBuilder cb, Root<Card> root, FilterCardRequestDto dto) {
         BigDecimal maxBalance = dto.minBalance();
         BigDecimal minBalance = dto.maxBalance();
         String cardStatus = dto.cardStatus();
@@ -74,10 +74,10 @@ public class CardCriteriaRepositoryImpl implements CardCriteriaRepository {
         List<Predicate> predicates = new ArrayList<>();
 
         if (maxBalance != null) {
-            predicates.add(cb.le(root.get("balance"), maxBalance));
+            predicates.add(cb.ge(root.get("balance"), maxBalance));
         }
         if (minBalance != null) {
-            predicates.add(cb.ge(root.get("balance"), minBalance));
+            predicates.add(cb.le(root.get("balance"), minBalance));
         }
         if (cardStatus != null) {
             predicates.add(cb.equal(root.get("status"), CardStatus.valueOf(cardStatus)));

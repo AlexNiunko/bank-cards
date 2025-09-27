@@ -6,7 +6,6 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Enumeration;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -26,10 +25,11 @@ public class JwtFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
         throws ServletException, IOException {
         String authHeader = request.getHeader("Authorization");
-        String token=null;
+        String token = null;
         Long userId = null;
 
-        if (authHeader != null && authHeader.startsWith("Bearer ") && !request.getRequestURI().equals("/bank-rest/auth")) {
+        if (authHeader != null && authHeader.startsWith("Bearer ") && !request.getRequestURI()
+            .equals("/bank-rest/auth")) {
             token = authHeader.substring(7);
             userId = jwtTokenUtils.extractUserId(token);
         }

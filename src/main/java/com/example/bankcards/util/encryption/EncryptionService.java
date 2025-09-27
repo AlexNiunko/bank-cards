@@ -15,7 +15,7 @@ public class EncryptionService {
     private String algorithm;
 
     @Value("${encoder.secret}")
-    private  String secretKey;
+    private String secretKey;
 
     private SecretKeySpec keySpec;
 
@@ -31,7 +31,7 @@ public class EncryptionService {
             byte[] encrypted = cipher.doFinal(raw.getBytes());
             return Base64.getEncoder().encodeToString(encrypted);
         } catch (Exception e) {
-            throw new EncryptionException(String.format("Ошибка шифрования %s",raw));
+            throw new EncryptionException(String.format("Ошибка шифрования %s", raw));
         }
     }
 
@@ -43,7 +43,7 @@ public class EncryptionService {
             byte[] decrypted = cipher.doFinal(decoded);
             return new String(decrypted);
         } catch (Exception e) {
-            throw new EncryptionException(String.format("Ошибка дешифрования %s",encryptedLine));
+            throw new EncryptionException(String.format("Ошибка дешифрования %s", encryptedLine));
         }
     }
 }

@@ -47,7 +47,7 @@ public class UserOperationController {
     })
     @SecurityRequirement(name = "bearerAuth")
     @GetMapping("/get-user-cards")
-    public List<FullCardResponseDto>getUserCard(@RequestBody Long userId){
+    public List<FullCardResponseDto> getUserCard(@RequestBody Long userId) {
         return userOperationService.getUserCards(userId);
     }
 
@@ -65,7 +65,7 @@ public class UserOperationController {
     })
     @SecurityRequirement(name = "bearerAuth")
     @PostMapping("/request-block-card")
-    public CardResponseBlockDto requestBlockCard(@RequestBody @Valid RequestCardBlockDto dto){
+    public CardResponseBlockDto requestBlockCard(@RequestBody @Valid RequestCardBlockDto dto) {
         return userOperationService.requestBlockCard(dto);
     }
 
@@ -83,7 +83,7 @@ public class UserOperationController {
     })
     @SecurityRequirement(name = "bearerAuth")
     @PostMapping("/transfer")
-    public TransferResponseDto transfer(@RequestBody @Valid TransferRequestDto dto){
+    public TransferResponseDto transfer(@RequestBody @Valid TransferRequestDto dto) {
         return userOperationService.transfer(dto);
     }
 
@@ -101,7 +101,7 @@ public class UserOperationController {
     })
     @SecurityRequirement(name = "bearerAuth")
     @GetMapping("/balance")
-    public BalanceResponseDto getBalance(@RequestBody @Valid BalanceRequestDto dto){
+    public BalanceResponseDto getBalance(@RequestBody @Valid BalanceRequestDto dto) {
         return userOperationService.getBalance(dto);
     }
 

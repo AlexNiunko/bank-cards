@@ -20,7 +20,7 @@ public record FullUserResponseDto(
     String login,
 
     @Schema(description = "Список ролей пользователя")
-    List<String>roles,
+    List<String> roles,
 
     @Schema(description = "Статус пользователя")
     ProfileStatus status,

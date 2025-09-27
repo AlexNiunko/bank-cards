@@ -5,6 +5,7 @@ import static com.example.bankcards.util.encryption.ExceptionMessage.DUPLICATE_C
 import static com.example.bankcards.util.encryption.ExceptionMessage.USER_NOT_EXIST_BY_ID;
 
 import com.example.bankcards.dto.request.CreateCardRequestDto;
+import com.example.bankcards.dto.request.PageableCardRequest;
 import com.example.bankcards.dto.request.UpdateCardStatusRequestDto;
 import com.example.bankcards.dto.response.CardResponseDto;
 import com.example.bankcards.dto.response.CreateCardResponseDto;
@@ -21,6 +22,8 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,8 +35,15 @@ public class CardServiceImpl implements CardService {
 
     private final UserRepository userRepository;
 
-    private final EncryptionService service;
     private final EncryptionService encryptionService;
+
+    private static CardResponseDto getCardResponseDto(Long cardId, Card card) {
+        return CardResponseDto.builder()
+            .cardId(cardId)
+            .firstname(card.getUser().getUserInfo().getFirstname())
+            .lastname(card.getUser().getUserInfo().getLastname())
+            .build();
+    }
 
     @Transactional
     @Override
@@ -55,7 +65,6 @@ public class CardServiceImpl implements CardService {
 
         return getCardResponseDto(savedCard, user);
     }
-
 
     @Transactional
     @Override
@@ -95,6 +104,21 @@ public class CardServiceImpl implements CardService {
         return result;
     }
 
+    @Transactional
+    @Override
+    public List<FullCardResponseDto> getAllCardsUsingPageable(PageableCardRequest dto) {
+        var pageSize = dto.pageSize();
+        var pageNumber = dto.pageNumber();
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        List<FullCardResponseDto> result = new ArrayList<>();
+        cardRepository.findAll(pageable).forEach(
+            item -> {
+                result.add(getFullCardResponseDto(item));
+            }
+        );
+        return result;
+    }
+
     private FullCardResponseDto getFullCardResponseDto(Card item) {
         return FullCardResponseDto.builder()
             .cardId(item.getId())
@@ -127,14 +151,6 @@ public class CardServiceImpl implements CardService {
             .balance(BigDecimal.ZERO)
             .build();
 
-    }
-
-    private static CardResponseDto getCardResponseDto(Long cardId, Card card) {
-        return CardResponseDto.builder()
-            .cardId(cardId)
-            .firstname(card.getUser().getUserInfo().getFirstname())
-            .lastname(card.getUser().getUserInfo().getLastname())
-            .build();
     }
 
     private Card getCard(Long cardId) {

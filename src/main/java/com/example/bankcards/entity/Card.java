@@ -52,7 +52,7 @@ public class Card {
     @Enumerated(EnumType.STRING)
     private CurrencyType currency;
 
-    @OneToMany(orphanRemoval = true,mappedBy = "card",fetch = FetchType.LAZY)
+    @OneToMany(orphanRemoval = true, mappedBy = "card", fetch = FetchType.LAZY)
     @Cascade(value = {CascadeType.ALL})
     private List<RequestCardBlock> requestCardBlockList;
 

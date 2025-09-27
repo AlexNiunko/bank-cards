@@ -2,10 +2,10 @@ insert into role (name)
 values ('USER'),
        ('ADMIN');
 
-
--- $2a$10$j6.P987YcDW1.NdPIQ1JGuRSLW1bgcYZFF8zh5qfTt.JMFgPTnx4a --- 123
--- $2a$10$ixQdwG5PCGr6VnVl4fGd1.WKhRjK2G1ZXghCbH954ysYGmwCqtZMa --- 456
--- $2a$10$kTs.2LnpH3SP0otC8yteIeNhZEL6LfYqxiRMKM3mt1iyw5PLZQCAS --- 789
+--  Пароли для пользователей
+-- 'alex@gmail.com'    $2a$10$j6.P987YcDW1.NdPIQ1JGuRSLW1bgcYZFF8zh5qfTt.JMFgPTnx4a --- 123
+-- 'ivan@mail.ru'      $2a$10$ixQdwG5PCGr6VnVl4fGd1.WKhRjK2G1ZXghCbH954ysYGmwCqtZMa --- 456
+-- 'sveta@gmail.com'   $2a$10$kTs.2LnpH3SP0otC8yteIeNhZEL6LfYqxiRMKM3mt1iyw5PLZQCAS --- 789
 
 
 insert into users (login, password, firstname, lastname, birth_date, phone_number,status)

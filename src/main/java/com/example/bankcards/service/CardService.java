@@ -1,6 +1,7 @@
 package com.example.bankcards.service;
 
 import com.example.bankcards.dto.request.CreateCardRequestDto;
+import com.example.bankcards.dto.request.PageableCardRequest;
 import com.example.bankcards.dto.request.UpdateCardStatusRequestDto;
 import com.example.bankcards.dto.response.CardResponseDto;
 import com.example.bankcards.dto.response.CreateCardResponseDto;
@@ -17,4 +18,5 @@ public interface CardService {
 
     List<FullCardResponseDto> getAllCards();
 
+    List<FullCardResponseDto> getAllCardsUsingPageable(PageableCardRequest dto);
 }

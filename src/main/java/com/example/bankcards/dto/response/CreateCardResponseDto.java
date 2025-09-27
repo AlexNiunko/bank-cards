@@ -5,7 +5,7 @@ import lombok.Builder;
 
 @Schema(description = "Ответ на запрос создания карты пользователя")
 @Builder
-public record CreateCardResponseDto (
+public record CreateCardResponseDto(
 
     @Schema(description = "Идентификатор карты пользователя")
     Long cardId,
@@ -15,6 +15,6 @@ public record CreateCardResponseDto (
 
     @Schema(description = "Фамилия пользователя")
     String lastName
-){
+) {
 
 }
