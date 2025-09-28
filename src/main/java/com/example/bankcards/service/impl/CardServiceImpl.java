@@ -37,14 +37,6 @@ public class CardServiceImpl implements CardService {
 
     private final EncryptionService encryptionService;
 
-    private static CardResponseDto getCardResponseDto(Long cardId, Card card) {
-        return CardResponseDto.builder()
-            .cardId(cardId)
-            .firstname(card.getUser().getUserInfo().getFirstname())
-            .lastname(card.getUser().getUserInfo().getLastname())
-            .build();
-    }
-
     @Transactional
     @Override
     public CreateCardResponseDto createCard(CreateCardRequestDto dto) {
@@ -157,5 +149,13 @@ public class CardServiceImpl implements CardService {
         return cardRepository.findById(cardId).orElseThrow(
             () -> new BusinessException(String.format(CARD_NOT_FOUND_BY_ID, cardId))
         );
+    }
+
+    private CardResponseDto getCardResponseDto(Long cardId, Card card) {
+        return CardResponseDto.builder()
+            .cardId(cardId)
+            .firstname(card.getUser().getUserInfo().getFirstname())
+            .lastname(card.getUser().getUserInfo().getLastname())
+            .build();
     }
 }

@@ -133,7 +133,7 @@ public class CardController {
         return criteriaRepository.getCardsByFilter(dto);
     }
 
-    @Operation(summary = "Получить все карты по фильтру")
+    @Operation(summary = "Получить все карты используя пагинацию")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Карты получены"),
         @ApiResponse(responseCode = "401", description = "Неуспешная валидация токена",

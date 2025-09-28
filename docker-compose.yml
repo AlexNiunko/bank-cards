@@ -11,6 +11,10 @@ services:
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=postgres
       - SPRING_JPA_HIBERNATE_DDL_AUTO=none
+      - JWT_LIFETIME=30m
+      - ENCODER_SECRET=QMULq8kR3pVbV0w9q8e5j7nC2vF4hXyD
+      - ENCODER_ALGORITM=AES
+      - LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_SECURITY=trace
     depends_on:
       - postgres
     restart: unless-stopped

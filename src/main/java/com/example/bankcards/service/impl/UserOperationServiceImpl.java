@@ -84,15 +84,15 @@ public class UserOperationServiceImpl implements UserOperationService {
         Card fromCard = getCard(fromCardId);
         Card toCard = getCard(toCardId);
 
+        System.out.println("Fuck you");
         if (!fromCard.getUser().getId().equals(userId) || !toCard.getUser().getId().equals(userId)) {
+            System.out.println("Hello!!! Bitch");
             throw new BusinessException(
                 String.format(CARDS_DOES_NOT_OWN_USER, userId));
         }
-
         checkCardStatus(fromCard, fromCardId);
         checkCardStatus(toCard, toCardId);
         checkCardBalance(fromCard, amount, fromCardId);
-
         fromCard.setBalance(fromCard.getBalance().subtract(amount));
         toCard.setBalance(toCard.getBalance().add(amount));
 

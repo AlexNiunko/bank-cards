@@ -106,26 +106,26 @@ pom.xml — файл для управления зависимостями пр
       <scope>runtime</scope>
     </dependency>
 
-    <!--    &lt;!&ndash; spring-boot-starter-test &ndash;&gt;-->
-    <!--    <dependency>-->
-    <!--      <groupId>org.springframework.boot</groupId>-->
-    <!--      <artifactId>spring-boot-starter-test</artifactId>-->
-    <!--      <scope>test</scope>-->
-    <!--    </dependency>-->
+        <!-- spring-boot-starter-test -->
+        <dependency>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter-test</artifactId>
+          <scope>test</scope>
+        </dependency>
 
-    <!--    &lt;!&ndash;  spring-boot-testcontainers  &ndash;&gt;-->
-    <!--    <dependency>-->
-    <!--      <groupId>org.springframework.boot</groupId>-->
-    <!--      <artifactId>spring-boot-testcontainers</artifactId>-->
-    <!--      <scope>test</scope>-->
-    <!--    </dependency>-->
+        <!--  spring-boot-testcontainers  -->
+        <dependency>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-testcontainers</artifactId>
+          <scope>test</scope>
+        </dependency>
 
-    <!--    &lt;!&ndash;  junit-jupiter  &ndash;&gt;-->
-    <!--    <dependency>-->
-    <!--      <groupId>org.testcontainers</groupId>-->
-    <!--      <artifactId>junit-jupiter</artifactId>-->
-    <!--      <scope>test</scope>-->
-    <!--    </dependency>-->
+        <!--  junit-jupiter  -->
+        <dependency>
+          <groupId>org.testcontainers</groupId>
+          <artifactId>junit-jupiter</artifactId>
+          <scope>test</scope>
+        </dependency>
 
     <!--    &lt;!&ndash;  postgresql  &ndash;&gt;-->
     <!--    <dependency>-->
