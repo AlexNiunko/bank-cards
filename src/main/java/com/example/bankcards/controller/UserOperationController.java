@@ -46,7 +46,7 @@ public class UserOperationController {
             content = {@Content(schema = @Schema(implementation = ErrorResponseDto.class))})
     })
     @SecurityRequirement(name = "bearerAuth")
-    @GetMapping("/get-user-cards")
+    @PostMapping("/get-user-cards")
     public List<FullCardResponseDto> getUserCard(@RequestBody Long userId) {
         return userOperationService.getUserCards(userId);
     }
@@ -100,7 +100,7 @@ public class UserOperationController {
             content = {@Content(schema = @Schema(implementation = ErrorResponseDto.class))})
     })
     @SecurityRequirement(name = "bearerAuth")
-    @GetMapping("/balance")
+    @PostMapping("/balance")
     public BalanceResponseDto getBalance(@RequestBody @Valid BalanceRequestDto dto) {
         return userOperationService.getBalance(dto);
     }
